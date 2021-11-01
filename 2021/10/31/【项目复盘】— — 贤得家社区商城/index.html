@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【项目复盘】— — 贤得家社区商城 | 青山の博客</title><meta name="keywords" content="学习经验记录分享"><meta name="author" content="青山,lvchangjing_hit@163.com"><meta name="copyright" content="青山"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、商品详情页的渲染 后端返回的是一个装有图片的 html 文件，https:&#x2F;&#x2F;ecommunity.oss-cn-zhangjiakou.aliyuncs.com&#x2F;product1623291740520.html，要做的是把 html 中的图片渲染进详情页。 想用 iframe 实现。 最后解决方案： 通过一个子组件 html-panel.vue，以 v-html 的方式渲染得到的数据，然后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【项目复盘】— — 贤得家社区商城">
+<meta property="og:url" content="https://asura1211.github.io/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/index.html">
+<meta property="og:site_name" content="青山の博客">
+<meta property="og:description" content="一、商品详情页的渲染 后端返回的是一个装有图片的 html 文件，https:&#x2F;&#x2F;ecommunity.oss-cn-zhangjiakou.aliyuncs.com&#x2F;product1623291740520.html，要做的是把 html 中的图片渲染进详情页。 想用 iframe 实现。 最后解决方案： 通过一个子组件 html-panel.vue，以 v-html 的方式渲染得到的数据，然后">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg">
+<meta property="article:published_time" content="2021-10-31T15:01:17.000Z">
+<meta property="article:modified_time" content="2021-11-01T13:33:47.775Z">
+<meta property="article:author" content="青山">
+<meta property="article:tag" content="学习经验记录分享">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://asura1211.github.io/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【项目复盘】— — 贤得家社区商城',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-11-01 21:33:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="青山の博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/06/07/Zpg5K4k9MJcLmI8.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">青山の博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【项目复盘】— — 贤得家社区商城</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-31T15:01:17.000Z" title="发表于 2021-10-31 23:01:17">2021-10-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-01T13:33:47.775Z" title="更新于 2021-11-01 21:33:47">2021-11-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98/">项目复盘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">639</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【项目复盘】— — 贤得家社区商城"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>一、商品详情页的渲染</p>
+<p>后端返回的是一个装有图片的 html 文件，<a target="_blank" rel="noopener" href="https://ecommunity.oss-cn-zhangjiakou.aliyuncs.com/product1623291740520.html%EF%BC%8C%E8%A6%81%E5%81%9A%E7%9A%84%E6%98%AF%E6%8A%8A">https://ecommunity.oss-cn-zhangjiakou.aliyuncs.com/product1623291740520.html，要做的是把</a> html 中的图片渲染进详情页。</p>
+<p>想用 iframe 实现。</p>
+<p>最后解决方案：</p>
+<p>通过一个子组件 html-panel.vue，<strong>以 v-html 的方式渲染</strong>得到的数据，然后在父组件中加载子组件。</p>
+<p>在子组件中，用 props 接收传入的 url ，然后 watch url 值，发生改变就调用 load 方法。在 load 方法中通过 axios 发送网络请求，将数据存入 html。</p>
+<p>二、获取当前运行环境</p>
+<p>借助 vuex，通过 <code>this.$store.state.env</code> 得到当前的 env。</p>
+<p>判断 env 处理不同的分享逻辑：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1">https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1</a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//网页端微信分享</span></span><br><span class="line"><span class="keyword">if</span> (self.env == <span class="string">&quot;web&quot;</span>) &#123;</span><br><span class="line">    self.$wx.ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        self.$wx.updateAppMessageShareData(&#123;</span><br><span class="line">            <span class="attr">title</span>: self.goodsDetails.title,</span><br><span class="line">            <span class="attr">desc</span>: <span class="string">&quot;贤得家&quot;</span>,</span><br><span class="line">            <span class="attr">link</span>: self.link, <span class="comment">// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致</span></span><br><span class="line">            <span class="attr">imgUrl</span>: self.goodsDetails.picList[<span class="number">0</span>], <span class="comment">// 分享图标</span></span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        self.$wx.updateTimelineShareData(&#123;</span><br><span class="line">            <span class="attr">title</span>: self.goodsDetails.title,</span><br><span class="line">            <span class="attr">desc</span>: <span class="string">&quot;贤得家&quot;</span>,</span><br><span class="line">            <span class="attr">link</span>: self.link, <span class="comment">// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致</span></span><br><span class="line">            <span class="attr">imgUrl</span>: self.goodsDetails.picList[<span class="number">0</span>], <span class="comment">// 分享图标</span></span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//向小程序传输分享数据</span></span><br><span class="line"><span class="keyword">if</span> (self.env == <span class="string">&quot;miniprogram&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.$wx.miniProgram.postMessage(&#123;</span><br><span class="line">        <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="built_in">this</span>.goodsDetails.title,</span><br><span class="line">            <span class="attr">imageUrl</span>: <span class="built_in">this</span>.goodsDetails.picList[<span class="number">0</span>]</span><br><span class="line">            <span class="comment">//desc: document.querySelector(&#x27;meta[name=description]&#x27;).content</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;已把分享信息传给小程序&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//安卓分享</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">this</span>.env == <span class="string">&quot;android&quot;</span>) &#123;</span><br><span class="line">    <span class="comment">// 1.地址  2.标题  3.详情  4.图片 flutter中的 pigeon</span></span><br><span class="line">    <span class="built_in">window</span>.pigeon.share(</span><br><span class="line">        <span class="built_in">this</span>.link,</span><br><span class="line">        <span class="built_in">this</span>.goodsDetails.title,</span><br><span class="line">        <span class="string">&quot;贤得家&quot;</span>,</span><br><span class="line">        <span class="built_in">this</span>.goodsDetails.picList[<span class="number">0</span>]</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然如果是在微信环境，需要先得到微信数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">getWxInfo</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">//微信JSSDK初始化</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$axios(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&quot;/Ecommunity/market/goods/goodsShare&quot;</span>,</span><br><span class="line">        <span class="attr">params</span>: &#123;</span><br><span class="line">            <span class="attr">url</span>: <span class="built_in">this</span>.url</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (res.data.success) &#123;</span><br><span class="line">            <span class="built_in">this</span>.$wx.config(&#123;</span><br><span class="line">                <span class="attr">debug</span>: <span class="built_in">this</span>.debug,</span><br><span class="line">                <span class="attr">appId</span>: res.data.data.appId,</span><br><span class="line">                <span class="attr">timestamp</span>: res.data.data.timestamp,</span><br><span class="line">                <span class="attr">nonceStr</span>: res.data.data.nonceStr,</span><br><span class="line">                <span class="attr">signature</span>: res.data.data.signature,</span><br><span class="line">                <span class="attr">jsApiList</span>: [</span><br><span class="line">                    <span class="string">&quot;updateTimelineShareData&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;updateAppMessageShareData&quot;</span></span><br><span class="line">                ]</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+<p>三、重组参数使得页面跳转时方便传参（商品详情页面–&gt;立即购买页面）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = <span class="built_in">Object</span>.assign(&#123;&#125;, <span class="built_in">this</span>.goodsDetails, &#123;</span><br><span class="line">    <span class="attr">goodsId</span>: <span class="built_in">this</span>.goodsDetails.id,</span><br><span class="line">    <span class="attr">picture</span>: <span class="built_in">this</span>.goodsDetails.picList[<span class="number">0</span>],</span><br><span class="line">    <span class="attr">goodsSizeName</span>: <span class="built_in">this</span>.goodsSizeName</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> res = &#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">data</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">payType</span>: <span class="built_in">this</span>.payType,</span><br><span class="line">                <span class="attr">storeId</span>: <span class="built_in">this</span>.goodsDetails.storeDetailResult.id,</span><br><span class="line">                <span class="attr">storeName</span>: <span class="built_in">this</span>.goodsDetails.storeDetailResult.name,</span><br><span class="line">                <span class="attr">quantity</span>: <span class="built_in">this</span>.goodsDetails.quantity,</span><br><span class="line">                <span class="attr">goodsSizeId</span>: <span class="built_in">this</span>.goodsDetails.goodsSizeId,</span><br><span class="line">                <span class="attr">shoppingCartResults</span>: [obj]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">this</span>.$router.replace(&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/orderPage&quot;</span>,</span><br><span class="line">    <span class="attr">query</span>: &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="built_in">this</span>.goodsId,</span><br><span class="line">        <span class="attr">details</span>: res,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lvchangjing_hit@163.com">青山</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://asura1211.github.io/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/">https://asura1211.github.io/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Asura1211.github.io" target="_blank">青山の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/10/13/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><img class="next-cover" src="https://i.loli.net/2021/10/13/TzfF5RQVrDNdm76.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【面试准备】— — 计算机网络</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/06/07/Zpg5K4k9MJcLmI8.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">青山</div><div class="author-info__description">Stay hungry, stay foolish.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/" title="【项目复盘】— — 贤得家社区商城"><img src="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【项目复盘】— — 贤得家社区商城"/></a><div class="content"><a class="title" href="/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/" title="【项目复盘】— — 贤得家社区商城">【项目复盘】— — 贤得家社区商城</a><time datetime="2021-10-31T15:01:17.000Z" title="发表于 2021-10-31 23:01:17">2021-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/13/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="【面试准备】— — 计算机网络"><img src="https://i.loli.net/2021/10/13/TzfF5RQVrDNdm76.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【面试准备】— — 计算机网络"/></a><div class="content"><a class="title" href="/2021/10/13/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="【面试准备】— — 计算机网络">【面试准备】— — 计算机网络</a><time datetime="2021-10-13T14:28:02.000Z" title="发表于 2021-10-13 22:28:02">2021-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" title="【面试准备】— — 常见问题"><img src="https://i.loli.net/2021/10/13/TzfF5RQVrDNdm76.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【面试准备】— — 常见问题"/></a><div class="content"><a class="title" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" title="【面试准备】— — 常见问题">【面试准备】— — 常见问题</a><time datetime="2021-10-11T14:03:14.000Z" title="发表于 2021-10-11 22:03:14">2021-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88%E7%AF%87/" title="【面试准备】— — 前端综合篇"><img src="https://i.loli.net/2021/10/13/TzfF5RQVrDNdm76.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【面试准备】— — 前端综合篇"/></a><div class="content"><a class="title" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88%E7%AF%87/" title="【面试准备】— — 前端综合篇">【面试准备】— — 前端综合篇</a><time datetime="2021-10-11T12:53:49.000Z" title="发表于 2021-10-11 20:53:49">2021-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/06/%E3%80%90%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91%E2%80%94%20%E2%80%94%20%E9%87%8D%E5%AD%A6%E5%89%8D%E7%AB%AF%EF%BC%88%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4%EF%BC%89/" title="【阅读笔记】— — 重学前端（极客时间）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【阅读笔记】— — 重学前端（极客时间）"/></a><div class="content"><a class="title" href="/2021/10/06/%E3%80%90%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91%E2%80%94%20%E2%80%94%20%E9%87%8D%E5%AD%A6%E5%89%8D%E7%AB%AF%EF%BC%88%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4%EF%BC%89/" title="【阅读笔记】— — 重学前端（极客时间）">【阅读笔记】— — 重学前端（极客时间）</a><time datetime="2021-10-06T20:49:27.000Z" title="发表于 2021-10-07 04:49:27">2021-10-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 青山</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
