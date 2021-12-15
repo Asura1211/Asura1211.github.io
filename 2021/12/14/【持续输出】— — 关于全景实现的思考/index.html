@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【持续输出】— — 关于全景实现的思考 | 青山の博客</title><meta name="keywords" content="学习经验记录分享"><meta name="author" content="青山,lvchangjing_hit@163.com"><meta name="copyright" content="青山"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 十分幸运，在微信一面面试官老师的指导下，我对自己之前的项目做了一个深入的思考和原理分析，最后整理成了这篇文章。第一次输出文章可能不是很规范，日积月累加油吧！  Pannellum 实现这个VR看房的项目是使用 Vue + Pannellum 实现的。 简介Pannellum 是一个轻量级的 Web 全景图片查看器。全景图是一种广角图，标准的全景图是一张2：1的图像（在自己的VR全景项目中，采">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【持续输出】— — 关于全景实现的思考">
+<meta property="og:url" content="https://asura1211.github.io/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="青山の博客">
+<meta property="og:description" content="前言 十分幸运，在微信一面面试官老师的指导下，我对自己之前的项目做了一个深入的思考和原理分析，最后整理成了这篇文章。第一次输出文章可能不是很规范，日积月累加油吧！  Pannellum 实现这个VR看房的项目是使用 Vue + Pannellum 实现的。 简介Pannellum 是一个轻量级的 Web 全景图片查看器。全景图是一种广角图，标准的全景图是一张2：1的图像（在自己的VR全景项目中，采">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2021/12/15/rAJGo23DiCEjy8P.jpg">
+<meta property="article:published_time" content="2021-12-14T15:22:36.000Z">
+<meta property="article:modified_time" content="2021-12-15T09:01:17.488Z">
+<meta property="article:author" content="青山">
+<meta property="article:tag" content="学习经验记录分享">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2021/12/15/rAJGo23DiCEjy8P.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://asura1211.github.io/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【持续输出】— — 关于全景实现的思考',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-15 17:01:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="青山の博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/06/07/Zpg5K4k9MJcLmI8.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2021/12/15/rAJGo23DiCEjy8P.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">青山の博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【持续输出】— — 关于全景实现的思考</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-14T15:22:36.000Z" title="发表于 2021-12-14 23:22:36">2021-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-15T09:01:17.488Z" title="更新于 2021-12-15 17:01:17">2021-12-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA/">持续输出</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【持续输出】— — 关于全景实现的思考"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>十分幸运，在微信一面面试官老师的指导下，我对自己<a target="_blank" rel="noopener" href="https://www.hitlcj.top/2021/07/13/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E5%9F%BA%E4%BA%8Epannellum%E7%9A%84%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0/">之前的项目</a>做了一个深入的思考和原理分析，最后整理成了这篇文章。第一次输出文章可能不是很规范，日积月累加油吧！</p>
+</blockquote>
+<h1 id="Pannellum-实现"><a href="#Pannellum-实现" class="headerlink" title="Pannellum 实现"></a>Pannellum 实现</h1><p>这个VR看房的项目是使用 Vue + Pannellum 实现的。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Pannellum 是一个轻量级的 Web 全景图片查看器。全景图是一种广角图，标准的全景图是一张2：1的图像（在自己的VR全景项目中，采用的是 5376*2688 像素的 jpg 图片格式，平均每张图片大小为4M）。</p>
+<p>全景图像类型可以是以下三种：</p>
+<ul>
+<li><p><strong>equirectangular</strong>。圆柱投影，使用最简单（在项目中使用的也是这种方式），只需在项目中设置 type 和 panarama 引入准备好的全景图片即可。（若想展示 通过手机相机拍摄的全景图，需要限制宽高比，或者通过 ps 进行处理）</p>
+<p><img src="https://s2.loli.net/2021/12/15/FrznIxyYloj78uX.png" alt="image.png"></p>
+</li>
+<li><p><strong>cubemap</strong>。立方体投影，需要六个图像，顺序依次为前后左右上下。若想 将手机拍的普通照片进行VR展示，需要使用<strong>广角鱼眼镜头</strong>拍摄六个方向（前后左右上下）的图片，同时各图片间需要有一定的重合区域，以便“缝合”。<strong>优点</strong>：只需经过粗加工（例如裁切成正方形）就可以直接展示。</p>
+</li>
+<li><p><strong>multires</strong>。这是 Pannellum 独有的多分辨率格式，Pannellum 可以根据缩放的程度（改变Hfov）来显示不同分辨率的照片。该图片格式通过 Pannellum 中的 generate.py 程序转换而来（<code>python generate.py target.jpg</code>）。<strong>优点</strong>：优化加载场景的速度。</p>
+</li>
+</ul>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>从源码层面研究 pannellum 的全景实现原理。项目有两个 js 文件：<a target="_blank" rel="noopener" href="https://github.com/mpetroff/pannellum/blob/master/src/js/pannellum.js">pannellum.js</a>、<a target="_blank" rel="noopener" href="https://github.com/mpetroff/pannellum/blob/master/src/js/libpannellum.js">libpannellum.js</a>。</p>
+<ul>
+<li>pannellum.js 负责对整个页面进行处理。</li>
+<li>libpannellum.js 负责为 pannellum 提供渲染对象，本质借用 WebGL 的 API。</li>
+</ul>
+<h3 id="pannellum-js"><a href="#pannellum-js" class="headerlink" title="pannellum.js"></a>pannellum.js</h3><ol>
+<li><p>首先通过 js 创建各种 DOM 元素（如文字提示框、错误提示框、初始化的容器、版本框、加载框、缩放全屏控件、指南针等）并赋予 css 样式。</p>
+</li>
+<li><p><code>init</code> 函数：对 viewer 实例进行初始化</p>
+<ul>
+<li>图片初始化（最后将处理结果存进一个图片对象），然后判断类型：如果是 cubemap，会将6张图片放进一个数组；如果是 multires，会深拷贝对象，然后将得到高分辨率图片的 basePath 存进新对象；如果是equirectangular，就先判断是不是video，是则直接将 panorama 属性值（即路径）存进真实对象，否则新建一个 image 对象。</li>
+<li>然后分别处理：如果是 cubemap，会当最后一张图片时调用 <code>onImageLoad</code> 函数；如果是 multires，直接调用 <code>onImageLoad</code> 函数；如果是 equirectangular，就会新建 xhr 请求对象，将得到的结果和图片路径传入 <code>parseGPanoXMP</code> 函数，在响应中得到并渲染当前加载的进度（期间设置请求头、跨域等）。</li>
+</ul>
+</li>
+<li><p><code>onImageLoad</code> 函数：加载图像后创建渲染器并初始化事件侦听器（渲染器由 libpannellum 创建），对 DOM 元素绑定对应的鼠标、键盘和 touch 等事件。</p>
+</li>
+<li><p><code>mergeConfig</code> 函数：每次执行会创建新的 config，然后合并 default config 属性，再合并传入 initialConfig 的属性（该值为开发者在使用时自定义的 default 属性，用来对每个 pannellum 实例进行初始化），最后合并具体 sceneId 属性，从而使得实例属性完备。</p>
+</li>
+<li><p><code>parseGPanoXMP</code> 函数：使用 <a target="_blank" rel="noopener" href="https://developers.google.com/streetview/spherical-metadata">Google 的全景 API</a>，解析 Google Photo Sphere XMP 元数据。使用 GPano XMP 数据设置查看器 viewer，将全景图片渲染成照片球，以便之后通过 libpannellum 的 <code>render</code> 函数实现类似 <a target="_blank" rel="noopener" href="https://www.google.com/maps/@29.9925139,120.5852954,3a,90y,265.81h,81t/data=!3m8!1e1!3m6!1sAF1QipPWdhW_dMMVA-XPImSwjCfIqyGLjIvAjYLfhUP7!2e10!3e11!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipPWdhW_dMMVA-XPImSwjCfIqyGLjIvAjYLfhUP7%3Dw203-h100-k-no-pi-0-ya118.19268-ro-0-fo100!7i5376!8i2688?hl=zh-cn">Google 地图中的街景（VR）模式</a>。</p>
+</li>
+<li><p><code>mouseEventToCoords</code> 函数：根据鼠标当前的位置，通过复杂数学计算得到 panorama 的 pitch 和 yaw 值，从而实现全景中鼠标位置到俯仰角、水平方向角的转换。同样还有类似 <code>onDocumentMouseMove</code> 函数，用来处理鼠标移动事件。</p>
+</li>
+<li><p><code>animate</code> 函数：使用 <code>requestAnimationFrame</code> 触发 <code>render</code> 函数，从而渲染 panorama 图像。主要是对 pitch 和 yaw 的处理，通过调整偏航角度（yaw）来避免在左侧或右侧显示空白区域，然后还有一些边界条件的判断。渲染由 libpannellum.js 中的 <code>render</code> 函数完成。</p>
+</li>
+<li><p><code>renderInitCallback</code> 函数：渲染初始化完成时触发。处理之间的淡入淡出场景以及显示指南针和热点并隐藏加载展示。</p>
+</li>
+<li><p><code>Quaternion</code> 函数：处理 multires 格式的图像。在 Quaternion 函数原型上定义一个将四元数转换为欧拉角的函数。然后还有如 <code>computeQuaternion</code> 函数，将设备当前方向计算为四元数。</p>
+</li>
+<li><p><code>createHotSpot</code> 函数：为当前的场景创建热点（热点有url、video、image、changeScene等类型）。在点击热点跳转场景中，使用的就是 loadScene 事件<strong>（切换场景在做项目时困扰了我很久，当时如果想到看源码，很快就能解决了）</strong>。暴露出的可以自定义点击事件 <code>createTooltipFunc</code> 实现也很简单（得到 DOM 元素，然后将定义的参数再传入这个函数中）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (hs.createTooltipFunc) &#123;</span><br><span class="line">    hs.createTooltipFunc(div, hs.createTooltipArgs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>loadScene</code> 函数：接受sceneId, targetPitch, targetYaw, targetHfov等参数。在该函数中需要做以下事情：</p>
+<ul>
+<li>设置淡入淡出（如果之前指定）</li>
+<li>销毁之前热点</li>
+<li>创建新场景的 config（也是使用 <code>mergeConfig</code> 函数初始化 config）</li>
+<li>通过 <code>processOptions</code> 重新配置页面参数</li>
+<li>通过 <code>load</code> 加载页面</li>
+</ul>
+</li>
+</ol>
+<p>以上是我在阅读 pannellum.js 代码中整理的与渲染图像原理有关的一些函数，除此之外我发现作者做了<strong>大量的浏览器兼容</strong>，针对 IE 浏览器、IOS 等有不同的处理方式，也使用 <code>escapeHTML</code> 函数对 XSS 攻击做了<strong>防范</strong>；同时作者对<strong>垃圾回收</strong>也非常及时，在 <code>destroy</code> 函数中移除了所有之前注册的事件监听器。</p>
+<h3 id="libpannellum-js"><a href="#libpannellum-js" class="headerlink" title="libpannellum.js"></a>libpannellum.js</h3><ol>
+<li>首先渲染是通过创建 canvas，并添加到容器内实现的。对于拆分全景图片（cubemap、multires）渲染是<strong>基于 WebGL</strong> 的。</li>
+<li><code>init</code> 函数：<ul>
+<li>对 canvas 初始化：参数有 image（类型为Image、Array、Object，分别对应 equirectangular、cubemap、multires 格式图片）、haov（水平视角）、vaov（垂直视角），并定义了 WebGLRenderingContext 实例 gl，通过 <code>gl.bindBuffer</code> 方法绑定到目标。</li>
+<li>对 cubemap 类型图片：遍历图片数组，判断各张图片是否规模相等，如果不是则报错进行提示<code>console.log(&#39;Cube faces have inconsistent widths: &#39; + cubeImgWidth + &#39; vs. &#39; + image[s].width)</code>，再对这6张图片进行“预处理”（用背景填充任何缺失的立方体贴图面）</li>
+<li>使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API">WebGL API</a> 进行渲染：<ul>
+<li><code>gl.viewport</code> 设置视口</li>
+<li><code>gl.createShader</code> 创建顶点着色器（vs）。</li>
+<li><code>gl.shaderSource</code> 设置着色器。</li>
+<li><code>gl.compileShader</code> 编译一个GLSL着色器，使其成为二进制数据，然后就可以被 WebGLProgram 对象所使用。（分段着色器 fs 同理）</li>
+<li><code>gl.createProgram</code> 创建和初始化一个 WebGLProgra 对象，并将之前创建的着色器绑定到该对象身上，然后 <code>gl.useProgram</code> 使用该对象。</li>
+<li><strong><code>gl.texImage2D</code> 设置二维图片</strong>（cubemap 类型图片需要指定特定的 target，凭此显示特定面数）</li>
+<li><code>gl.linkProgram</code> 链接给定的 WebGLProgram，从而为程序的着色器准备进行 GPU 渲染。</li>
+<li><code>gl.uniform[1234][fi][v]</code> 统一变量的新值。</li>
+<li>etc.</li>
+</ul>
+</li>
+<li>然后通过 <code>Canvas.getContext(&#39;2d&#39;)</code> 建立一个二维渲染上下文，进行图像的绘制。</li>
+</ul>
+</li>
+<li><code>multiresNodeRenderSort</code> 函数：对多分辨率节点渲染进行排序（首先按照缩放程度，最小的最前，然后再根据图片位置距离视角中心，越近的越前）</li>
+<li>对 multires 节点进行渲染：循环图片数组，通过 <code>gl.bufferData</code> 得到当前图片顶点、通过 <code>gl.bindTexture</code> 绑定当前图片的 texture 到页面 WebGL 上，然后通过 <code>gl.drawElements</code> 渲染图片。由于多分辨率节点在显示时会根据当前分辨率加载不同图像，因此需要通过 <code>testMultiresNode</code> 函数测试多分辨率节点是否可见：若是，则会加载它的 texture，并加载适当的子节点，以便之后渲染（在创建子节点过程中，也会对一些特殊情况如子节点数量不够等做处理）。</li>
+<li><code>checkZoom</code> 函数：查找并应用最佳多分辨率缩放级别（level），是通过当前绘图缓冲区的实际宽度和图片最小瓦片（tile）的分辨率进行比较得到的。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>对于 equirectangular 类型的图片，pannellum 会先通过 Google 的全景 API 将全景图片渲染成照片球，然后在 libpannellum.js 中：通过 WebGL 的 <code>bindTexture</code> 和 <code>texImage2D</code> 等方式渲染成全景图。</li>
+<li>对于 cubemap 类型的图片，会先将图片存进一个长度为 6 的数组，然后在 libpannellum.js 中：首先遍历图片数组，检查每张图片的宽高是否一样，只有一样才能进行后续渲染，否则报错以提示，然后会进行“预处理”，防止图片背景有缺漏，最后通过遍历图片数组，对每个图片进行 <code>texImage2D</code> 渲染显示。</li>
+<li>对于 multires 类型的图片，会处理图片的真实路径（因为已经通过 python 将各个分辨率图片存进 multries 文件夹中），然后在 libpannellum.js 中：通过自定义的 <code>MultiresNode</code> 类型节点对每次更改分辨率后得到的最小单位的“瓦片”进行存储，然后利用 WebGL 的 <code>bindBuffer</code> 绑定不同缓冲区并初始化，通过 <code>getUniformLocation</code> 得到当前图像的点所处矩阵，在借助着色器绘图，最后将得到的 program 挂载到 gl 上，从而渲染成 VR 场景。</li>
+</ul>
+<h1 id="Three-js-实现"><a href="#Three-js-实现" class="headerlink" title="Three.js 实现"></a>Three.js 实现</h1><h2 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h2><p>先介绍一下 OpenGL、WebGL 和 Three.js：</p>
+<ul>
+<li><p>OpenGL：一套规范（不是接口），在支持 OpenGL 的机器上可以正常使用这些规范，并在显示器上看到绘制的结果。</p>
+</li>
+<li><p>WebGL：一种 3D 绘图标准，这种绘图技术标准把 JavaScript 和 OpenGL ES 2.0 结合在一起，通过 HTML5 的 Canvas 和 DOM 打交道，为HTML5 Canvas 提供硬件 3D 加速渲染。WebGL 技术标准免去了开发网页专用渲染插件的麻烦，可被用于创建具有复杂 3D 结构的网站页面，甚至可以用来设计 3D 网页游戏等。</p>
+</li>
+<li><p>Three.js：一款webGL框架，由于其易用性被广泛应用。Three.js 在 WebGL 的 api 接口基础上，又进行了一层封装。Three.js 以简单、直观的方式封装了 3D 图形编程中常用的对象，同时在开发中使用了很多图形引擎的高级技巧，极大提高了性能。</p>
+</li>
+</ul>
+<p>对于初学者而言，WebGL 原生的 api 需要一些数学和图形学的相关技术，入门较难，而 Three.js 对 WebGL进行封装，简化了创建三维动画场景的过程（如微信小游戏“跳一跳”就是在Three.js的基础上开发的）。下面将介绍使用 Three.js 实现 VR 全景的思路和原理，并针对一些具体问题进行了分析。</p>
+<h2 id="实现思路与原理"><a href="#实现思路与原理" class="headerlink" title="实现思路与原理"></a>实现思路与原理</h2><ol>
+<li><p>渲染一个 3D 世界所必须的三要素是<strong>场景</strong>（scene）、<strong>相机</strong>（camera）和<strong>渲染器</strong>（renderer）。</p>
+<ul>
+<li><p><strong>场景</strong>：是一个三维空间，接下来需要往空间里放待呈现的物体和相机等。场景包含网格（mesh）和光源（light）：</p>
+<ul>
+<li>Mesh 模型是计算机的三维模型，普遍用三角形组成的网格来描述。Mesh 又由两个部分组成：材质（Material）+ 几何体（Geometry），常用的有漫反射、镜面反射两种材质，还可以引入外部图片，贴到物体表面，成为纹理贴图。在渲染全景时，我们通过创建一个立方体，然后将图片以正确的顺序（左右上下前后）贴到立方体表面，这样就得到了一个图片立方体。</li>
+<li>Three.js 支持模拟不同光源，展现不同光照效果，有点光源、平行光、聚光灯等。对于VR全景，由于立方体贴图不受光影响，因此无需引入光源。</li>
+</ul>
+</li>
+<li><p><strong>相机</strong>：用来确定位置、方向、角度，可视为我们的眼睛，面向场景取景。Three.js中的相机分为两类：透视相机和正交相机，原理都是将可视范围内的物体投影到一个平面。它们的区别：</p>
+<ul>
+<li><p><strong>透视相机</strong>的可视体是一个四锥体（类似于手电光投影到墙面，近大远小），多用于渲染 3D 场景</p>
+</li>
+<li><p><strong>正交相机</strong>的可视体是一个长方体（类似于平行光投影到墙面，大小保持不变），多用于渲染 2D 场景或者 UI 元素。</p>
+<img src="https://s2.loli.net/2021/12/15/Zox1sCOk4LeVbuM.png" alt="image.png" style="zoom:80%;" /></li>
+</ul>
+</li>
+<li><p><strong>渲染器</strong>：将相机拍摄的画面呈现在浏览器。Three.js 中有很多种类的渲染器，如 webGLRenderer、canvasRenderer、SVGRenderer，通常使用 webGL 渲染器。初始化时需要对渲染器的尺寸进行设置。</p>
+</li>
+</ul>
+<img src="https://s2.loli.net/2021/12/15/xFbeM8Tz5yEu6Pw.png" alt="image.png" style="zoom:67%;" /></li>
+<li><p>以上三要素完成了通过相机静态取景的功能，但若想实现动态浏览全景，必须使用<strong>镜头控制器</strong>（OrbitControls）调整相机的位置、方向和角度。执行构造函数 <code>THREE.OrbitControls()</code> 浏览器会同时干两件事：</p>
+<ul>
+<li>一是给浏览器定义了一个鼠标、键盘事件，自动检测鼠标键盘的变化，并按照一定算法转化为相机的旋转角度。</li>
+<li>二是返回一个对象，给该对象添加监听事件，只要鼠标或键盘发生了变化，就触发渲染函数。当然，更好的做法是借助 <code>requestAnimationFrame()</code> 实现渲染器渲染方法 <code>render()</code> 的周期性调用，从而实现在移动鼠标过程中不断更新渲染视图，达到全景浏览的效果。</li>
+</ul>
+</li>
+<li><p>此时我们就能看到一个自动旋转的 6 面都为图像的立方体。为了实现全景效果，我们要改变立方体的深度为 -1，使得我们的相对视野进入立方体内，处于立方体中心，由此实现全景浏览。</p>
+</li>
+</ol>
+<h2 id="具体问题分析"><a href="#具体问题分析" class="headerlink" title="具体问题分析"></a>具体问题分析</h2><ol>
+<li><p><strong>对图片的要求</strong></p>
+<ul>
+<li><p>大小：虽然此种方式采用立方体贴图实现全景渲染，但是图片不一定必须为正方形。当图片为矩形时， Three.js 会自动对图像进行处理，但这会严重影响渲染结果，因此图片最好为正方形。</p>
+<p>当把顶部图片大小设置为 1024*256 像素，而其他图片格式都为 1024*1024 像素时，可以看到图片连接处有着明显的差异。<img src="https://s2.loli.net/2021/12/15/KL9xiUpaI63VuEw.png" alt="image.png"></p>
+</li>
+<li><p>分辨率：可以不相同，这只影响图片的清晰度。</p>
+</li>
+<li><p>格式：可以为 jpg 或 png。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>图片的缝合原理</strong></p>
+<p>Three.js 中采用右手坐标系对图片进行排列（posx、negx、posy、negy、posz、negz）：</p>
+<p><img src="https://s2.loli.net/2021/12/15/EvzSiHdrTXMw7sf.png" alt="image.png"></p>
+<p>体现在手机中，如右图所示：<img src="https://s2.loli.net/2021/12/15/teVwY5S2s4PB9om.png" alt="image.png" style="zoom: 67%;" /></p>
+<p>立方体贴图就是将六张图片贴合到立方体的表面，如下图：<img src="https://s2.loli.net/2021/12/15/zWk5GsD67XIn9wR.png" alt="image.png"></p>
+<p>当我们把图片以正确的顺序贴到立方体上时，呈现的就是一个正确的几何体：<img src="https://s2.loli.net/2021/12/15/rFYdwKkINs1jpaV.png" alt="image.png"></p>
+<p>当相机进入该立方体内部，就能实现全景漫游的效果：<img src="https://s2.loli.net/2021/12/15/zGKS5sChYXjtIe7.png" alt="image.png"></p>
+<p><strong>原理</strong>：在 <code>BoxGeometry</code> 类的构造函数中，对几何体的每一面通过 <code>buildPlane</code> 函数生成一个长宽相等的二维平面，利用 Vector3 对每一个平面的顶点、法线、紫外线（uvs）进行校正，从而实现连接处的贴合。默认返回一个立方体。</p>
+</li>
+<li><p><strong>交互事件如鼠标的平移、旋转、缩放</strong></p>
+<p>浏览器检测到鼠标事件，会将鼠标平移的距离按照一定算法转化为相机的旋转角度，这样 Three.js 就会使用相机新的位置或角度数据进行渲染。<strong>在全景中一般不使用平移和缩放功能</strong>，因为全景浏览过程中，相机始终在立方体正中心，平移和缩放都会改变相机的位置，而旋转只是改变相机的角度。</p>
+<ul>
+<li><p>平移：在内部表示为 PAN。对鼠标按下、移动做了处理，主要是对 panStart、panDelta 和 panEnd 这三个二维向量做改变：</p>
+<ul>
+<li>按下：将当前点击位置的 x 坐标、y 坐标存进 panStart。</li>
+<li>移动：用移动前后的两个向量差值乘以移动的速度，记为 panDelta ，然后通过 <code>pan</code> 函数得到 x 和 y 在坐标系中的具体偏移量，最后调用 <code>update</code> 方法更新相机视图。</li>
+</ul>
+</li>
+<li><p>旋转：在内部表示为 ROTATE。与平移一样，对 rotateStart、rotateDelta 和 rotateEnd 这三个二维向量做改变：</p>
+<ul>
+<li><p>按下：将当前点击位置的 x 坐标、y 坐标存进 rotateStart。</p>
+</li>
+<li><p>移动：用移动前后的两个向量差值乘以移动的速度，记为 rotateDelta，但不同的是在这里需要获得当前 DOM 元素，然后通过 <code>rotateLeft</code> 和 <code>rotateUp</code> 函数，根据圆体公式传入旋转的角度（由2Πx、2Πy与当前元素的高度比值得到），从而改变当前视角的所在的真正角度，再调用 <code>update</code> 方法更新视图，实现旋转。公式可参考以下图：</p>
+<img src="https://s2.loli.net/2021/12/15/jC4BKgOHMVXi3tb.png" alt="image.png" style="zoom:67%;" /></li>
+</ul>
+</li>
+<li><p>缩放：在内部表示为 DOLLY。</p>
+<ul>
+<li>按下：将当前点击位置的 x 坐标、y 坐标存进 dollyStart。</li>
+<li>移动：将移动前后的两个向量差值记为 dollyDelta ，然后根据 dollyDelta 判断当前缩放行为。如果放大，会调用 <code>dollyIn</code> 函数，将相机所能拍摄到的规模乘以传入的放大比例，否则进行相除以缩小规模。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>如何实现渲染</strong></p>
+<p>通过 <code>render</code> 函数渲染。渲染器负责同时渲染场景以及相机。大致步骤如下：</p>
+<ul>
+<li>更新整个场景图（包括相机）：通过 <code>updateMatrixWorld</code> 函数更新每个物体的 matrix。这个函数还会对该物体的子节点遍历更新，每个物体的 matrix 是利用 <code>compose</code> 函数对 position、quaternion、scale 做矩阵计算得来的。</li>
+<li>初始化渲染列表（renderList）：通过 <code>projectObject</code> 函数确定哪些对象要被渲染。<code>projectObject</code> 函数只会对可见的光照（light），精灵（sprite），网格（mesh），线条（line），点（point ）进行渲染，而且利用递归，保证场景中的每个可渲染的物体都能被正确渲染。</li>
+<li>渲染物体（renderObject）：使用 <code>renderBufferDirect</code> 函数。在这个函数中，会设置 program（即WebGLProgram，在它的初始化中会获取顶点和片元着色器，构造最终用于进行渲染的 GLSL，并连接到 program），最后调用 <code>drawArrays</code> 函数，将先前创建的 geometry 以及 materials 渲染到 3D 场景的 canvas 中。</li>
+</ul>
+</li>
+<li><p><strong>如何更新视图</strong></p>
+<p>利用 <code>requestAnimationFrame()</code> 实时更新视图，在参数函数中调用 <code>render</code> 函数进行更新。</p>
+<p>注意：requestAnimationFrame 不是立即调用函数，而是向浏览器发起一个执行某函数的请求， 什么时候执行由浏览器决定，一般默认保持 60FPS 的频率，即大约每 16.7ms 调用一次 <code>requestAnimationFrame()</code> 方法指定的函数。</p>
+</li>
+<li><p><strong>兼容性</strong></p>
+<p>由于 Three.js 是WebGL3D 引擎，因此要考虑某些设备以及浏览器对 WebGL 的兼容性。可以使用 <a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/WebGL.js">Three.js 的 WebGL 插件</a>检验（<code>WEBGL.isWebGLAvailable()</code>），通过在 DOM 中创建 canvas 元素，判断是否创建成功，从而进行不同的响应。</p>
+<p>支持 WebGL 的浏览器：Google Chrome 9+, Firefox 4+, Opera 15+, Safari 5.1+, Internet Explorer 11 and Microsoft Edge。对于不支持的浏览器，会回退到其他渲染器（CSS2DRenderer, CSS3DRenderer, SVGRenderer 等）</p>
+</li>
+<li><p><strong>加载渲染失败的处理</strong></p>
+<p>在使用 <code>load</code> 函数加载图片，fetch 请求时若遇到错误，会调用 <code>LoadingManager</code> 的 <code>onError</code> 函数，传入对应的 url 并进行处理（体现在浏览器中即报错） </p>
+</li>
+</ol>
+<h1 id="总结-amp-感悟"><a href="#总结-amp-感悟" class="headerlink" title="总结&amp;感悟"></a>总结&amp;感悟</h1><ul>
+<li><p>通过对 pannellum 源码的阅读，印象最深的是<strong>代码非常规范</strong>，定义的每个函数都有相应的注释声明参数格式与作用、函数类型、函数功能、返回结果；代码的功能函数封装也非常完善，对于多次用到的代码块进行了封装；还有如<strong>编码风格</strong>等也值得我深入学习。</p>
+</li>
+<li><p>同时也知道该如何快速学习一门新的库或者框架：先阅读官方文档，对整体功能有一个大致认识，然后在项目实践过程中，遇到问题就从官方文档中或者仓库 issues 中找答案，如果仍找不到，不妨可以通过关键字阅读源码，了解它的具体实现逻辑。</p>
+</li>
+<li><p>感觉在这两天整理思路的过程中学到的东西 比 完成整个项目 还要多。之前自己仅仅是停留在库或者框架的 API 调用上，简单的利用它实现某个功能。但经过这两天的学习，我发现深入理解自己所使用的库对做项目有极大的帮助，不仅能直观看到这些库本质上是如何实现某些功能的，在遇到问题时也能第一时间从源码中寻找解决办法。</p>
+</li>
+</ul>
+<ul>
+<li><strong>使用 pannellum 和 Three.js 进行开发 VR 全景的感受</strong>：我认为 pannellum 更加的方便，因为它是一款专门针对全景图片的 Web 查看器，封装了相应的接口，这使得开发者很容易就能基于 pannellum 进行再次开发，如 @ali/rmpi-cube 就是基于 pannellum 开发的360全景容器组件；而 Three.js 则更为灵活和强大，用它进行开发虽然需要更多的步骤，但是发挥空间更高，能实现很多其他库实现不了的效果。</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene">Three.js官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js/blob/master/build/three.module.js">three.module.js 地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/OrbitControls.js">OrbitControls.js 地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cxybb.com/article/fen747042796/55102837">全景虚拟漫游实现(three.js)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903815796228104#heading-10">ThreeJs学习笔记——渲染(render)分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30100043/article/details/82014971">Three.js和其它webgl框架</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lvchangjing_hit@163.com">青山</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://asura1211.github.io/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/">https://asura1211.github.io/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Asura1211.github.io" target="_blank">青山の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2021/12/15/rAJGo23DiCEjy8P.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/"><img class="next-cover" src="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【项目复盘】— — 贤得家社区商城</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/06/07/Zpg5K4k9MJcLmI8.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">青山</div><div class="author-info__description">Stay hungry, stay foolish.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Asura1211"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pannellum-%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">Pannellum 实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pannellum-js"><span class="toc-number">2.2.1.</span> <span class="toc-text">pannellum.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#libpannellum-js"><span class="toc-number">2.2.2.</span> <span class="toc-text">libpannellum.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Three-js-%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">Three.js 实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="toc-number">3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%8E%9F%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">实现思路与原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">3.3.</span> <span class="toc-text">具体问题分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-amp-%E6%84%9F%E6%82%9F"><span class="toc-number">4.</span> <span class="toc-text">总结&amp;感悟</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/" title="【持续输出】— — 关于全景实现的思考"><img src="https://s2.loli.net/2021/12/15/rAJGo23DiCEjy8P.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【持续输出】— — 关于全景实现的思考"/></a><div class="content"><a class="title" href="/2021/12/14/%E3%80%90%E6%8C%81%E7%BB%AD%E8%BE%93%E5%87%BA%E3%80%91%E2%80%94%20%E2%80%94%20%E5%85%B3%E4%BA%8E%E5%85%A8%E6%99%AF%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%80%9D%E8%80%83/" title="【持续输出】— — 关于全景实现的思考">【持续输出】— — 关于全景实现的思考</a><time datetime="2021-12-14T15:22:36.000Z" title="发表于 2021-12-14 23:22:36">2021-12-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/" title="【项目复盘】— — 贤得家社区商城"><img src="https://i.loli.net/2021/10/13/e1m9lTZkGhDBf2s.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【项目复盘】— — 贤得家社区商城"/></a><div class="content"><a class="title" href="/2021/10/31/%E3%80%90%E9%A1%B9%E7%9B%AE%E5%A4%8D%E7%9B%98%E3%80%91%E2%80%94%20%E2%80%94%20%E8%B4%A4%E5%BE%97%E5%AE%B6%E7%A4%BE%E5%8C%BA%E5%95%86%E5%9F%8E/" title="【项目复盘】— — 贤得家社区商城">【项目复盘】— — 贤得家社区商城</a><time datetime="2021-10-31T15:01:17.000Z" title="发表于 2021-10-31 23:01:17">2021-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/13/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="【面试准备】— — 计算机网络"><img src="https://i.loli.net/2021/11/26/c8CoiAjKTyGNS4a.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【面试准备】— — 计算机网络"/></a><div class="content"><a class="title" href="/2021/10/13/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="【面试准备】— — 计算机网络">【面试准备】— — 计算机网络</a><time datetime="2021-10-13T14:28:02.000Z" title="发表于 2021-10-13 22:28:02">2021-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88%E7%AF%87/" title="【面试准备】— — 前端综合篇"><img src="https://i.loli.net/2021/11/20/NIbleFaWKTwf6GO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【面试准备】— — 前端综合篇"/></a><div class="content"><a class="title" href="/2021/10/11/%E3%80%90%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E3%80%91%E2%80%94%20%E2%80%94%20%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88%E7%AF%87/" title="【面试准备】— — 前端综合篇">【面试准备】— — 前端综合篇</a><time datetime="2021-10-11T12:53:49.000Z" title="发表于 2021-10-11 20:53:49">2021-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/06/%E3%80%90%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91%E2%80%94%20%E2%80%94%20%E9%87%8D%E5%AD%A6%E5%89%8D%E7%AB%AF%EF%BC%88%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4%EF%BC%89/" title="【阅读笔记】— — 重学前端（极客时间）"><img src="https://i.loli.net/2021/10/13/UAFPpZByEcjaWOw.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【阅读笔记】— — 重学前端（极客时间）"/></a><div class="content"><a class="title" href="/2021/10/06/%E3%80%90%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91%E2%80%94%20%E2%80%94%20%E9%87%8D%E5%AD%A6%E5%89%8D%E7%AB%AF%EF%BC%88%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4%EF%BC%89/" title="【阅读笔记】— — 重学前端（极客时间）">【阅读笔记】— — 重学前端（极客时间）</a><time datetime="2021-10-06T20:49:27.000Z" title="发表于 2021-10-07 04:49:27">2021-10-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 青山</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
